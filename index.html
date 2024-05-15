@@ -71,7 +71,7 @@
             var clientId = 'lenanites'; // Remplacez par votre Client ID Twitch
             var channelName = 'lenanites'; // Remplacez par le nom de la chaîne Twitch
             var followersUrl = 'https://api.twitch.tv/helix/users/follows?to_id=' + channelName;
-
+            var previewUrl = 'https://api.twitch.tv/helix/users?login=' + channelName;
             var apiUrl = 'https://api.twitch.tv/helix/streams?user_login=' + channelName;
 
             fetch(apiUrl, {
