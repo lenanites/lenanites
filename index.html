@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Statut de la chaîne Twitch</title>
+    <title>Site Web de la chaîne Twitch</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f0f0f0;
+        }
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
         }
         .container {
             max-width: 800px;
@@ -37,6 +48,10 @@
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <a href="#status">Statut du stream</a>
+        <a href="#schedule">Planning Twitch</a>
+    </div>
     <div class="container">
         <h1>Statut de la chaîne Twitch</h1>
         <div class="status" id="status"></div>
