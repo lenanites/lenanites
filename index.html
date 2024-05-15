@@ -89,7 +89,7 @@
                 } else {
                     // La chaîne est hors ligne
                     document.getElementById('status').innerHTML = '<span class="offline">Hors ligne</span>';
-                    document.getElementById('streamPreview').src = ''; // Effacer l'aperçu du stream
+                    document.getElementById('streamPreview').src = previewUrl;
                 }
             })
             .catch(error => {
