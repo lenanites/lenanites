@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statut de la chaîne Twitch</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .status {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .live {
+            color: green;
+        }
+        .offline {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Statut de la chaîne Twitch</h1>
+        <div class="status" id="status"></div>
+    </div>
+
+    <script>
+        // Fonction pour interroger l'API Twitch
+        function checkTwitchStatus() {
+            var clientId = 'lenanites'; // Remplacez par votre Client ID Twitch
+            var channelName = 'lenanites'; // Remplacez par le nom de la chaîne Twitch
+
+            var apiUrl = 'https://api.twitch.tv/helix/streams?user_login=' + channelName;
+
+            fetch(apiUrl, {
+                headers: {
+                    'Client-ID': clientId
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.data && data.data.length > 0) {
+                    // La chaîne est en direct
+                    document.getElementById('status').innerHTML = '<span class="live">En direct</span>';
+                } else {
+                    // La chaîne est hors ligne
+                    document.getElementById('status').innerHTML = '<span class="offline">Hors ligne</span>';
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de la récupération du statut de la chaîne Twitch :', error);
+                document.getElementById('status').innerHTML = 'Erreur lors de la récupération du statut';
+            });
+        }
+
+        // Appeler la fonction pour vérifier le statut de la chaîne Twitch au chargement de la page
+        checkTwitchStatus();
+
+        // Actualiser le statut de la chaîne Twitch toutes les 30 secondes
+        setInterval(checkTwitchStatus, 30000);
+    </script>
+</body>
+</html>
