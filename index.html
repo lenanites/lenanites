@@ -70,6 +70,7 @@
         function checkTwitchStatus() {
             var clientId = 'lenanites'; // Remplacez par votre Client ID Twitch
             var channelName = 'lenanites'; // Remplacez par le nom de la chaîne Twitch
+            var followersUrl = 'https://api.twitch.tv/helix/users/follows?to_id=' + channelName;
 
             var apiUrl = 'https://api.twitch.tv/helix/streams?user_login=' + channelName;
 
@@ -97,6 +98,22 @@
                 document.getElementById('status').innerHTML = 'Erreur lors de la récupération du statut';
             });
         }
+        // Récupérer le nombre de followers
+            fetch(followersUrl, {
+                headers: {
+                    'Client-ID': clientId
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.total) {
+                    document.getElementById('followers').innerText = 'Nombre de followers : ' + data.total;
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de la récupération du nombre de followers de la chaîne Twitch :', error);
+                document.getElementById('followers').innerText = 'Erreur lors de la récupération du nombre de followers';
+            });
 
         // Appeler la fonction pour vérifier le statut de la chaîne Twitch au chargement de la page
         checkTwitchStatus();
