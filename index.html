@@ -45,6 +45,12 @@
         .offline {
             color: red;
         }
+        .stream-preview {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -52,9 +58,11 @@
         <a href="#status">Statut du stream</a>
         <a href="#schedule">Planning Twitch</a>
     </div>
+
     <div class="container">
         <h1>Statut de la chaîne Twitch</h1>
         <div class="status" id="status"></div>
+        <img src="" alt="Aperçu du stream" class="stream-preview" id="streamPreview">
     </div>
 
     <script>
@@ -75,9 +83,13 @@
                 if (data.data && data.data.length > 0) {
                     // La chaîne est en direct
                     document.getElementById('status').innerHTML = '<span class="live">En direct</span>';
+                    // Récupérer l'aperçu du stream
+                    var previewUrl = data.data[0].thumbnail_url.replace('{width}', '640').replace('{height}', '360');
+                    document.getElementById('streamPreview').src = previewUrl;
                 } else {
                     // La chaîne est hors ligne
                     document.getElementById('status').innerHTML = '<span class="offline">Hors ligne</span>';
+                    document.getElementById('streamPreview').src = ''; // Effacer l'aperçu du stream
                 }
             })
             .catch(error => {
@@ -94,3 +106,4 @@
     </script>
 </body>
 </html>
+
