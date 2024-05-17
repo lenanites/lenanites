@@ -61,7 +61,8 @@
 <body>
     <div class="navbar">
         <a href="/lenanites/">Accueil</a>
-        <a href="/lenanites/social.html">Réseaux sociaux</a> <!-- Lien vers la nouvelle page -->
+        <a href="/lenanites/twitch.html">Twitch</a>
+        <a href="/lenanites/social.html">Réseaux sociaux</a>
     </div>
 
     <div class="container">
@@ -70,76 +71,6 @@
         <img src="offline_preview.png" alt="Aperçu hors ligne de la chaîne" class="stream-preview" id="streamPreview">
         <div class="followers" id="followers"></div> <!-- Déplacement de cet élément en dessous de l'aperçu du stream -->
     </div>
-
-    <script>
-        // Fonction pour interroger l'API Twitch
-        function checkTwitchStatus() {
-            var clientId = 'lenanites'; // Remplacez par votre Client ID Twitch
-            var channelName = 'lenanites'; // Remplacez par le nom de la chaîne Twitch
-
-            var statusUrl = 'https://api.twitch.tv/helix/streams?user_login=' + channelName;
-            var previewUrl = 'https://api.twitch.tv/helix/users?login=' + channelName;
-            var followersUrl = 'https://api.twitch.tv/helix/users/follows?to_id=' + channelName;
-
-            fetch(statusUrl, {
-                headers: {
-                    'Client-ID': clientId
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                var statusElement = document.getElementById('status');
-                if (data.data && data.data.length > 0) {
-                    // La chaîne est en direct
-                    statusElement.innerHTML = '<span class="live">En direct</span>';
-                    // Récupérer l'aperçu du stream
-                    fetch(previewUrl, {
-                        headers: {
-                            'Client-ID': clientId
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(userData => {
-                        if (userData.data && userData.data.length > 0) {
-                            var previewUrl = userData.data[0].profile_image_url;
-                            document.getElementById('streamPreview').src = previewUrl;
-                        }
-                    });
-                } else {
-                    // La chaîne est hors ligne
-                    statusElement.innerHTML = '<span class="offline">Hors ligne</span>';
-                    document.getElementById('streamPreview').src = 'offline_preview.png';
-                }
-            })
-            .catch(error => {
-                console.error('Erreur lors de la récupération du statut de la chaîne Twitch :', error);
-                document.getElementById('status').innerHTML = 'Erreur lors de la récupération du statut';
-            });
-
-            // Récupérer le nombre de followers
-            fetch(followersUrl, {
-                headers: {
-                    'Client-ID': clientId
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.total) {
-                    document.getElementById('followers').innerText = 'Nombre de followers : ' + data.total;
-                }
-            })
-            .catch(error => {
-                console.error('Erreur lors de la récupération du nombre de followers de la chaîne Twitch :', error);
-                document.getElementById('followers').innerText = 'Erreur lors de la récupération du nombre de followers';
-            });
-        }
-
-        // Appeler la fonction pour vérifier le statut de la chaîne Twitch au chargement de la page
-        checkTwitchStatus();
-
-        // Actualiser le statut de la chaîne Twitch toutes les 30 secondes
-        setInterval(checkTwitchStatus, 30000);
-    </script>
 </body>
 </html>
 
